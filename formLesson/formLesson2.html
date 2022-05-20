@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>フォームの様々な部品</title>
+	</head>
+	<body>
+		<form action="" method="post">
+			<div>お名前:<input type="text" name="username" value="" required></div>
+			<div>年齢:<input type="text" name="age" value="20" min="0" max="120"></div>
+			<div>
+				性別:
+				<label><input type="radio" name="sex" value="man">男</label>
+				<label><input type="radio" name="sex" value="woman">女</label>
+			</div>
+			<div>
+				趣味:
+				<input type="checkbox" name="hobby" value="camera">カメラ
+				<input type="checkbox" name="hobby" value="movie">映画
+				<input type="checkbox" name="hobby" value="cooking">料理
+			</div>
+			<div>コメント</div>
+			<div>
+				<textarea name="comment" rows="5" cols="40" placeholder="コメントを入れて下さい"></textarea>
+			</div>
+			<div>
+				<select>
+					<option value="A">A</option>
+					<option value="B">B</option>
+					<option value="C">C</option>
+				</select>
+			</div>
+			<div>
+				すきな色:
+				<input type="color" name="color" value="#ff0000">
+			</div>
+			<div><input type="range" name="range" value="0" min="0" max="10" step="1"></div>
+			<div><input type="submit" value="送信"></div>
+		</form>
+	</body>
+</html>
