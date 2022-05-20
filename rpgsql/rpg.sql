@@ -254,7 +254,62 @@ GROUP BY クリア結果
 ORDER BY クリア結果 ASC
 
 48.
+SELECT 
+CASE
+WHEN sum(mp)<500 THEN "敵は見とれている!"
+WHEN sum(mp)<1000 THEN "敵は呆然としている!"
+ELSE "敵はひれ伏している!"
+END AS 小さな奇跡の効果
+FROM パーティー
 
 49.
-50.
+SELECT 
+CASE WHEN クリア区分=1 THEN "クリアした"
+ELSE "参加したがクリアしていない"
+END AS 区分,
+count(クリア区分) AS イベント数
+FROM 経験イベント
+GROUP BY クリア区分 DESC
 
+50.
+SELECT SUBSTRING(職業コード,1,1) AS 職業タイプ,sum(hp) AS 最大HP,min(hp) AS 最小MP,avg(hp) AS 平均HP,sum(mp) AS 最大MP,min(mp) AS 最小MP,avg(mp) AS 平均MP 
+FROM パーティー
+GROUP BY 職業タイプ
+
+51.
+SELECT SUBSTRING(id,1,1) AS IDによる分類,avg(hp) AS HPの平均,avg(mp) AS MPの平均 
+FROM パーティー
+GROUP BY IDによる分類
+
+52.
+SELECT 
+SUM(
+    CASE
+    WHEN hp<100 THEN 1
+    WHEN hp<150 THEN 2
+    WHEN hp<200 THEN 3
+    ELSE 5
+    END
+)
+AS 開けられる扉の数 
+FROM パーティー
+
+53.
+SELECT 
+名称 AS なまえ,
+hp AS 現在のHP,
+(SELECT hp
+WHERE コード名称="勇者")/SUM(hp)*100
+AS パーティでの割合 
+FROM パーティー
+LEFT JOIN (SELECT * FROM コード WHERE コード種別=1) AS c
+ON 職業コード=コード値
+
+54.
+
+55.
+56.
+57.
+58.
+59.
+60.
