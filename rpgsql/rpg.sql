@@ -306,10 +306,46 @@ LEFT JOIN (SELECT * FROM コード WHERE コード種別=1) AS c
 ON 職業コード=コード値
 
 54.
+UPDATE パーティー 
+LEFT JOIN (SELECT * FROM コード WHERE コード種別="1") AS 職業
+ON 職業コード=コード値
+SET mp=273+round((SELECT SUM(mp) FROM パーティー JOIN (SELECT * FROM コード WHERE コード種別="1") AS 職業 ON 職業コード=コード値 WHERE コード名称<>"魔法使い"))*0.1
+WHERE コード名称="魔法使い"
 
 55.
+SELECT k.イベント番号,クリア結果 FROM 経験イベント AS k
+LEFT JOIN (SELECT * FROM イベント) AS e
+ON k.イベント番号=e.イベント番号
+LEFT JOIN (SELECT * FROM コード WHERE コード種別=3) AS c
+ON タイプ=コード値
+WHERE コード名称="特殊" OR コード名称="強制"
+
 56.
+SELECT 名称 AS 最も高いMPを持つキャラクター,mp AS MP FROM パーティー
+WHERE mp=(SELECT MAX(mp) FROM パーティー)
+
 57.
+SELECT イベント番号,イベント名称 AS 着手していないイベント FROM イベン
+WHERE イベント番号 NOT IN(SELECT イベント番号 FROM 経験イベント)
+
 58.
+SELECT COUNT(イベント番号) AS 着手していないイベント数 FROM イベント
+WHERE イベント番号 NOT IN(SELECT イベント番号 FROM 経験イベント)
 59.
+SELECT e.イベント番号,イベント名称 FROM イベント AS e
+JOIN 経験イベント AS k
+ON e.イベント番号=k.イベント番号
+WHERE ルート番号<5
+
 60.
+SELECT e.イベント番号,イベント名称,前提イベント番号 FROM イベント AS e
+JOIN 経験イベント AS k
+ON 前提イベント番号=k.イベント番号
+WHERE クリア結果 IS NOT NULL
+
+61.
+62.
+63.
+64.
+65.
+66.
