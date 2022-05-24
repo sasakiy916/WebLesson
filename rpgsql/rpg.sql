@@ -344,8 +344,42 @@ ON 前提イベント番号=k.イベント番号
 WHERE クリア結果 IS NOT NULL
 
 61.
+UPDATE 経験イベント SET クリア結果="B",クリア区分=1
+WHERE イベント番号=9;
+
+INSERT INTO 経験イベント(イベント番号,クリア区分)
+VALUES(
+    (SELECT 後続イベント番号 FROM イベント AS e
+    JOIN 経験イベント AS k
+    ON e.イベント番号=k.イベント番号
+    WHERE e.イベント番号=9),
+    0
+)
+
 62.
+SELECT ルート番号,e.イベント番号,イベント名称,クリア結果 FROM 経験イベント AS k
+LEFT JOIN イベント AS e
+ON k.イベント番号=e.イベント番号
+WHERE クリア結果 IS NOT NULL
+
 63.
+SELECT e.イベント番号,イベント名称,クリア区分 FROM イベント AS e
+LEFT JOIN (SELECT * FROM コード WHERE コード種別=3) AS c
+ON タイプ=コード値
+JOIN 経験イベント AS k
+ON e.イベント番号=k.イベント番号
+WHERE コード名称="強制"
 64.
+SELECT e.イベント番号,イベント名称,
+CASE 
+WHEN クリア区分=0 OR クリア区分 IS NULL THEN "未クリア"
+ELSE クリア区分
+END AS クリア区分
+FROM イベント AS e
+LEFT JOIN (SELECT * FROM コード WHERE コード種別=3) AS c
+ON タイプ=コード値
+LEFT JOIN 経験イベント AS k
+ON e.イベント番号=k.イベント番号
+WHERE コード名称="強制"
 65.
 66.
