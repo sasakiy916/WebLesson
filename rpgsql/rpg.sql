@@ -369,6 +369,7 @@ ON タイプ=コード値
 JOIN 経験イベント AS k
 ON e.イベント番号=k.イベント番号
 WHERE コード名称="強制"
+
 64.
 SELECT e.イベント番号,イベント名称,
 CASE 
@@ -381,5 +382,22 @@ ON タイプ=コード値
 LEFT JOIN 経験イベント AS k
 ON e.イベント番号=k.イベント番号
 WHERE コード名称="強制"
+
 65.
+SELECT id AS ID,名称 AS なまえ,
+(SELECT コード名称 FROM コード
+WHERE コード種別=1 AND コード値=職業コード) AS 職業,
+(SELECT コード名称 FROM コード
+ WHERE コード種別=2 AND コード値=状態コード) AS 状態
+FROM パーティー
+
 66.
+SELECT id AS ID,
+CASE
+WHEN 名称 IS NULL THEN "(仲間になっていない!)"
+ELSE 名称
+END AS なまえ,
+コード名称 AS 職業 FROM コード
+LEFT JOIN パーティー
+ON コード値=職業コード
+WHERE コード種別=1
